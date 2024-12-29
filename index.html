@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰페이지</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Gothic+A1&family=IBM+Plex+Sans+KR&family=Jua&family=Noto+Sans+KR:wght@100..900&display=swap');
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            user-select: none;
+            margin: 0 auto;
+            padding: 0 0rem;
+            max-width: 50rem;
+            text-align: center;
+            align-items: center;
+            font-family: 'IBM Plex Sans KR';
+            background: url(zero-duck.PNG) center no-repeat;
+        }
+
+        #review-page {
+            padding-top: 15vh;
+        }
+
+        #review-complete {
+            padding-top: 15vh;
+        }
+
+        .star_rating {
+            padding-top: 20px;
+            width: 100%; 
+            box-sizing: border-box;
+            float: left;
+            flex-direction: row; 
+            justify-content: flex-start;
+        }
+        .star_rating .star {
+            width: 30px; 
+            height: 30px; 
+            margin-right: 10px;
+            display: inline-block; 
+            background: url('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FE2bww%2FbtsviSSBz4Q%2F5UYnwSWgTlFt6CEFZ1L3Q0%2Fimg.png') no-repeat; 
+            background-size: 100%; 
+            box-sizing: border-box; 
+        }
+        .star_rating .star.on {
+            width: 30px; 
+            height: 30px;
+            margin-right: 10px;
+            display: inline-block; 
+            background: url('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb2d6gV%2FbtsvbDoal87%2FXH5b17uLeEJcBP3RV3FyDk%2Fimg.png') no-repeat;
+            background-size: 100%; 
+            box-sizing: border-box; 
+        }
+
+        .star_box {
+            width: 70%;
+            box-sizing: border-box;
+            display: inline-block;
+            margin: 15px 0;
+            background: #F3F4F8;
+            border: 0;
+            opacity: 80%;
+            border-radius: 10px;
+            height: 100px;
+            resize: none;
+            padding: 15px;
+            font-size: 13px;
+            font-family: sans-serif;
+        }
+        .btn02 {
+            width: 70%;
+            font-weight: bold;
+            border: 0;
+            border-radius: 10px;
+            max-height: 50px;
+            padding: 15px 0;
+            font-size: 1.1em;
+            text-align: center;
+            background-color: #212529;
+            color: #fff;
+        }
+
+        h2 {
+            font-weight: bold;
+            color: #212529;
+            font-size: 24px;
+            text-shadow: 0px 0px 15px #fff;
+        }
+
+        a {
+            font-size: 16px;
+            text-shadow: 0px 0px 15px #fff;
+        }
+
+        .review-complete {
+            display: none
+        }
+
+        @media (max-width: 768px) {
+            .star_rating .star {
+                width: 23px;
+                height: 23px;
+            }
+
+            .star_rating .star.on {
+                width: 23px;
+                height: 23px;
+            }
+
+            .star_box {
+                height: 70px;
+            }
+
+            .btn02 {
+                font-size: 0.9em;
+                max-height: 40px;
+                padding: 10px 0;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            a {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .star_rating .star {
+                width: 17px;
+                height: 17px;
+            }
+
+            .star_rating .star.on {
+                width: 17px;
+                height: 17px;
+            }
+
+            .star_box {
+                height: 60px;
+            }
+
+            .btn02 {
+                font-size: 0.7em;
+                max-height: 30px;
+                padding: 7px 0;
+            }
+
+            h2 {
+                font-size: 16px;
+            }
+
+            .star_box {
+                font-size: 10px;
+            }
+
+            a {
+                font-size: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav id="review-page">
+    <h2>영덕대게 부천소사점</h2>
+    <a>고객님의 소중한 리뷰는 더 나은 서비스를 제공하는데 도움이 됩니다 :)</a>
+
+    <div class ="star_rating">
+        <span class="star on" value="1"> </span>
+        <span class="star" value="2"> </span>
+        <span class="star" value="3"> </span>
+        <span class="star" value="4"> </span>
+        <span class="star" value="5"> </span>
+    </div>
+
+    <textarea class="star_box" placeholder="리뷰를 작성해주세요."></textarea>
+
+    <input type="submit" class="btn02" id="submit-review" value="제출"/>
+    </nav>
+    <div class="review-complete" id="review-complete">
+        <h2>응답이 기록되었습니다!</h2>
+        <a>소중한 의견 감사합니다.</a>
+    </div>
+
+
+    <script>
+
+        document.querySelectorAll('.star_rating > .star').forEach(star => {
+            star.addEventListener('click', function () {
+                const siblings = this.parentElement.querySelectorAll('span');
+                siblings.forEach(sibling => sibling.classList.remove('on'));
+                this.classList.add('on');
+                let previousSibling = this.previousElementSibling;
+                while (previousSibling) {
+                    previousSibling.classList.add('on');
+                    previousSibling = previousSibling.previousElementSibling;
+                }
+            });
+        });
+
+        const submitReviewBtn = document.getElementById('submit-review');
+        const reviewComplete = document.getElementById('review-complete');
+        const reviewPage = document.getElementById('review-page');
+
+        submitReviewBtn.addEventListener('click', () => {
+            reviewPage.style.display = 'none';
+            submitReviewBtn.style.display = 'none';
+            reviewComplete.style.display = 'block';
+            document.body.style.background = 'url()';
+        });
+    </script>
+</body>
+</html>
